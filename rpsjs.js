@@ -3,8 +3,8 @@ console.log("Hello World!");
 let playerScore = 0;
 let computerScore = 0;
 
-roundKeeper();
-
+//roundKeeper();
+/*
 function roundKeeper()
 {
 
@@ -68,68 +68,129 @@ function getNumberOfRounds(){
     let numberOfRounds = prompt("How Many Rounds?");
     return Number(numberOfRounds);
 }
+*/
 
-function playRound()
+const buttons = document.querySelectorAll('button');
+if (buttons){
+    console.log(buttons);
+
+    buttons.forEach((button) => {
+
+        button.addEventListener('click', () => {
+            playRound(button.id);
+        })
+    })
+}
+
+/*
+
+const buttonrock = document.querySelector('#rock');
+if (buttonrock){
+buttonrock.addEventListener('click', () => {
+    playRound('rock');
+});
+}
+*/
+
+function playRound(playerInput)
 {
-    let playerChoice = getPlayerChoice();
+
+    console.log(playerInput);
+
+    let playerChoice = playerInput;
     let computerChoice = getRandomChoice();
+
+
+    
+
+    const playerChoiceElement = document.querySelector('#player-chose');
+    const computerChoiceElement = document.querySelector('#computer-chose');
+    const resultElement = document.querySelector('#result');
+    
 
 
     console.log("You Chose: " + playerChoice);
     console.log("Computer Chose: " + computerChoice);
 
+    playerChoiceElement.textContent = ('You Chose: ' + playerChoice);
+    computerChoiceElement.textContent = ('Computer Chose: ' + computerChoice);
+
     if (playerChoice === computerChoice)
     {
         console.log(">>>>>>>>>>>>>>>>>> IT'S A DRAW!");
+        resultElement.textContent = ('IT\'S A DRAW!');
     }
     else
     {
-        if (playerChoice === 'Rock')
+        if (playerChoice === 'rock')
         {
-            if (computerChoice === 'Paper')
+            if (computerChoice === 'paper')
             {
                 addComputerScore(1);
-                console.log("Paper > Rock >>>>>>>>>>>>>>>>>> COMPUTER WINS!")
+                console.log("paper > rock >>>>>>>>>>>>>>>>>> COMPUTER WINS!");
+                resultElement.textContent = ('COMPUTER WINS!');
+
             }
-            else if (computerChoice === 'Scissors')
+            else if (computerChoice === 'scissors')
             {
                 addPlayerScore(1);
-                console.log("Rock > Scissors >>>>>>>>>>>>>>>>>> PLAYER WINS!")
+                console.log("rock > scissors >>>>>>>>>>>>>>>>>> PLAYER WINS!");
+                resultElement.textContent = ('PLAYER WINS!');
+
             }
         }  
-        else if (playerChoice === 'Paper')
+        else if (playerChoice === 'paper')
         {
-            if (computerChoice === 'Rock')
+            if (computerChoice === 'rock')
             {
                 addPlayerScore(1);
-                console.log("Paper > Rock >>>>>>>>>>>>>>>>>> PLAYER WINS")
+                console.log("paper > rock >>>>>>>>>>>>>>>>>> PLAYER WINS");
+                resultElement.textContent = ('PLAYER WINS!');
             }
-            else if (computerChoice === 'Scissors')
+            else if (computerChoice === 'scissors')
             {
                 addComputerScore(1);
-                console.log("Scissors > Paper >>>>>>>>>>>>>>>>>> COMPUTER WINS!")
+                console.log("scissors > paper >>>>>>>>>>>>>>>>>> COMPUTER WINS!");
+                resultElement.textContent = ('COMPUTER WINS!');
             }
         }
-        else if (playerChoice === 'Scissors')
+        else if (playerChoice === 'scissors')
         {
-            if (computerChoice === 'Rock')
+            if (computerChoice === 'rock')
             {
                 addComputerScore(1);
-                console.log("Rock > Scissors >>>>>>>>>>>>>>>>>> COMPUTER WINS!")
+                console.log("rock > scissors >>>>>>>>>>>>>>>>>> COMPUTER WINS!");
+                resultElement.textContent = ('COMPUTER WINS!');
             }
-            else if (computerChoice === 'Paper')
+            else if (computerChoice === 'paper')
             {
                 addPlayerScore(1);
-                console.log("Scissors > Paper >>>>>>>>>>>>>>>>>> PLAYER WINS!")
+                console.log("scissors > paper >>>>>>>>>>>>>>>>>> PLAYER WINS!");
+                resultElement.textContent = ('PLAYER WINS!');
             }
         }
         else
         {
             console.log("Invalid Entry...")
+            resultElement.textContent = ('Invalid Entry...');
         }
 
         
         
+    }
+
+    if (computerScore + playerScore >= 5)
+    {
+
+        if (computerScore < playerScore)
+        {
+            alert("GAME OVER!\n PLAYER WINS!");
+        }
+        else if (computerScore > playerScore)
+        {
+            alert("GAME OVER!\n COMPUTER WINS!");
+        }
+        alert("GAME OVER!");
     }
 
     
@@ -137,21 +198,26 @@ function playRound()
 
 function addComputerScore(amountToAdd){
     
+    const scoreElement = document.querySelector('#running-score');
+
     computerScore = computerScore + amountToAdd;
     /*console.log("Computer Score: " + computerScore);*/
+    scoreElement.textContent = ('Score: P: ' + playerScore + ' - C: ' + computerScore);
     return computerScore;
 }
 
 function addPlayerScore(amountToAdd){
     
+    const scoreElement = document.querySelector('#running-score');
     playerScore = playerScore + amountToAdd;
     /*console.log("Player Score: " + playerScore);*/
+    scoreElement.textContent = ('Score: P: ' + playerScore + ' - C: ' + computerScore);
     return playerScore;
 }
 
 function getPlayerChoice(){
 
-    let rawPlayerChose = prompt("Enter Your Move - Rock , Paper , Scissors ?");
+    let rawPlayerChose = prompt("Enter Your Move - rock , paper , scissors ?");
     let lowerCase = rawPlayerChose.toLowerCase();
     let finalPlayerChose = lowerCase.charAt(0).toUpperCase() + lowerCase.slice(1);
     return finalPlayerChose;
@@ -163,11 +229,11 @@ function getRandomChoice(){
 
     switch(randNumber) {
         case 0:
-            return 'Rock'
+            return 'rock'
         case 1:
-            return 'Paper'
+            return 'paper'
         case 2:
-            return 'Scissors'
+            return 'scissors'
         default:
             return 'BROKEN'
             
